@@ -10,3 +10,17 @@ Range Hackathon Project
 * redux: 4.0.5
 * redux-thunk: 2.3.0
 * axios: 0.21.1
+
+### How to Build ###
+
+```bash
+$ cd {PROJECT}
+$ yarn
+& yarn upgrade #if you needed
+& cd ios
+& pod install
+
+& cd ..
+& yarn react-native run-ios
+& yarn react-native run-android
+```
