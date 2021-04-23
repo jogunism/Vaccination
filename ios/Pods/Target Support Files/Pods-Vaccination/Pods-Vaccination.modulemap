@@ -1,0 +1,6 @@
+module Pods_Vaccination {
+  umbrella header "Pods-Vaccination-umbrella.h"
+
+  export *
+  module * { export * }
+}

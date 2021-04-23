@@ -1,0 +1,6 @@
+module Pods_Vaccination_VaccinationTests {
+  umbrella header "Pods-Vaccination-VaccinationTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
