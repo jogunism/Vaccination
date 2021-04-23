@@ -14,13 +14,16 @@ Range Hackathon Project
 ### How to Build ###
 
 ```bash
-$ cd {PROJECT}
+$ cd {PROJECT_FOLDER}
 $ yarn
-& yarn upgrade #if you needed
-& cd ios
-& pod install
+$ yarn upgrade #if you needed
 
-& cd ..
-& yarn react-native run-ios
-& yarn react-native run-android
+# for ios running
+$ cd ios
+$ pod install
+
+$ cd ..
+# build
+$ yarn react-native run-ios
+$ yarn react-native run-android
 ```
