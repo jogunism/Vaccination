@@ -10,8 +10,6 @@ export const Main: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const { data } = useSelector((state: RootState) => state.main);
 
-  // test
-
   /* -----------------------------------------------
    * Methods
    */
