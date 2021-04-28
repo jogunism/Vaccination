@@ -1,20 +1,39 @@
-import { VaccinationData } from '../redux/types';
 import React, { useEffect, useRef } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { CompositeNavigationProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { testAction } from '../redux/actions';
 import { RootState } from '../redux/reducers';
 
-interface Props {}
-export const Main: React.FC<Props> = () => {
+import { VaccinationData } from '../redux/types';
+import { TopNavigatorParamsList, NavigatorParamsList } from '../navigation/types';
+
+
+export interface MainProps {
+  navigation: CompositeNavigationProp<
+    StackNavigationProp<TopNavigatorParamsList, 'Main'>,
+    StackNavigationProp<NavigatorParamsList>
+    >,
+  map: undefined
+};
+
+export const Main: React.FC<MainProps> = ({ navigation }) => {
   const dispatch = useDispatch();
   const { data } = useSelector((state: RootState) => state.main);
 
   /* -----------------------------------------------
    * Methods
    */
-  const pressButton = () => {
-    console.log('button pressed');
+  const pressPush = () => {
+    navigation.navigate('Sub');
+  };
+
+  const pressModal = () => {
+    navigation.navigate('Modal', {
+      screen: 'Modal'
+    });
   };
 
   const jsxStates = (o: { [key: string]: VaccinationData }) => {
@@ -54,16 +73,25 @@ export const Main: React.FC<Props> = () => {
   }, []);
 
   return (
-    <View>
+    <SafeAreaView>
       <Text style={styles.title}>MAIN</Text>
-      <Button
-        color={styles.button.color}
-        title="button"
-        onPress={pressButton}
-      />
       <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text>
       <View style={styles.states}>{jsxStates(data.states)}</View>
-    </View>
+      <Button
+        color={styles.button.color}
+        title="push"
+        onPress={pressPush}
+      />
+      <Button
+        color={styles.button.color}
+        title="modal"
+        onPress={() => {
+          navigation.navigate('Modal', {
+            screen: 'Modal', 
+          });
+        }}
+      />
+    </SafeAreaView>
   );
 };
 
@@ -72,7 +100,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     textAlign: 'center',
-    paddingTop: 100,
   },
   data: {
     fontSize: 12,
