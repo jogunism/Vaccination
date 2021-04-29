@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, Button, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -19,7 +19,13 @@ export interface MainProps {
   map: undefined
 };
 
+const wait = (timeout: number) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+
 export const Main: React.FC<MainProps> = ({ navigation }) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const dispatch = useDispatch();
   const { data } = useSelector((state: RootState) => state.main);
 
@@ -35,6 +41,14 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
       screen: 'Modal'
     });
   };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => {
+      dispatch(testAction());
+      setRefreshing(false);
+    });
+  }, []);
 
   const jsxStates = (o: { [key: string]: VaccinationData }) => {
     if (o === undefined) {
@@ -58,7 +72,7 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
   useEffect(() => {
     if (!mounted.current) {
       // mounted
-      dispatch(testAction());
+      // dispatch(testAction());
     }
     mounted.current = !mounted.current;
     return () => {
@@ -73,29 +87,51 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView>
-      <Text style={styles.title}>MAIN</Text>
-      <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text>
-      <View style={styles.states}>{jsxStates(data.states)}</View>
-      <Button
-        color={styles.button.color}
-        title="push"
-        onPress={pressPush}
-      />
-      <Button
-        color={styles.button.color}
-        title="modal"
-        onPress={() => {
-          navigation.navigate('Modal', {
-            screen: 'Modal', 
-          });
-        }}
-      />
-    </SafeAreaView>
+    <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        contentOffset={{x: 0, y: 0}}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {/* <View style={styles.mainView}> */}
+          <Text style={styles.title}>main page</Text>
+          <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text>
+          <View style={styles.states}>{jsxStates(data.states)}</View>
+          <Button
+            color={styles.button.color}
+            title="push"
+            onPress={pressPush}
+          />
+          <Button
+            color={styles.button.color}
+            title="modal"
+            onPress={() => {
+              navigation.navigate('Modal', {
+                screen: 'Modal', 
+              });
+            }}
+          />
+        {/* </View> */}
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+
+  },
+  scrollView: {
+    flex: 1,
+
+    backgroundColor: 'white',
+    // alignItems: 'center',
+    // borderEndWidth: 1,
+    justifyContent: 'flex-start'
+  },
   title: {
     fontSize: 16,
     fontWeight: '700',

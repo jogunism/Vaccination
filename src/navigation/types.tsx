@@ -5,7 +5,7 @@ export type ModalNavigatorParamsList = {
 };
 
 export type TopNavigatorParamsList = {
-  Main: undefined;
+  Vaccination: undefined;
   Sub: undefined;
 };
 

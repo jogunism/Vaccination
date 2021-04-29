@@ -4,7 +4,7 @@ import { TopNavigatorParamsList, NavigatorParamsList, ModalNavigatorParamsList }
 import { Main, Sub, Modal } from '../containers';
 
 const options: StackNavigationOptions = {
-  headerShown: false
+  // headerShown: false
 };
 
 const TopNavigator: React.FC = () => {
@@ -12,7 +12,7 @@ const TopNavigator: React.FC = () => {
 
   return (
     <Navigator>
-      <Screen name="Main" options={options} component={Main} />
+      <Screen name="Vaccination" options={options} component={Main} />
       <Screen name="Sub" options={options} component={Sub} />
       {/* ... */}
     </Navigator>
@@ -23,7 +23,7 @@ const ModalNavigator: React.FC = () => {
   const { Navigator, Screen } = createStackNavigator<ModalNavigatorParamsList>();
 
   return (
-    <Navigator mode='modal'>
+    <Navigator mode='modal' headerMode='none'>
       <Screen name="Modal" options={options} component={Modal} />
     </Navigator>
   );
@@ -33,7 +33,7 @@ const Navigator: React.FC = () => {
   const { Navigator, Screen } = createStackNavigator<NavigatorParamsList>();
 
   return (
-    <Navigator mode='modal'>
+    <Navigator mode='modal' headerMode='none'>
       <Screen name="Root" options={options} component={TopNavigator} />
       <Screen name="Modal" options={options} component={ModalNavigator} />
     </Navigator>
