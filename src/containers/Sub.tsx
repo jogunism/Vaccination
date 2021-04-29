@@ -1,6 +1,5 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack'
 
 import { TopNavigatorParamsList } from '../navigation/types';
@@ -11,9 +10,9 @@ export interface SubProps {
 
 export const Sub: React.FC<SubProps> = ({ navigation }) => {
   return (
-    <SafeAreaView style={styles.view}>
+    <View style={styles.view}>
       <Text style={styles.title}>sub page</Text>
-    </SafeAreaView>
+    </View>
   );
 };
 
