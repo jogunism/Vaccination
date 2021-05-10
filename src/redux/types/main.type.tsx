@@ -19,6 +19,7 @@ export interface VaccinationData {
   delta: number;
   indication: Indication;
   quote: number;
+  name: string;
   vaccinated: number;
   vaccination: Vaccination;
   states: { [key: string]: VaccinationData };

@@ -6,6 +6,7 @@ import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { testAction } from '../redux/actions';
 import { RootState } from '../redux/reducers';
+import { MapView } from '../component/mapbox';
 
 import { VaccinationData } from '../redux/types';
 import { TopNavigatorParamsList, NavigatorParamsList } from '../navigation/types';
@@ -15,8 +16,7 @@ export interface MainProps {
   navigation: CompositeNavigationProp<
     StackNavigationProp<TopNavigatorParamsList, 'Vaccination'>,
     StackNavigationProp<NavigatorParamsList>
-    >,
-  map: undefined
+    >
 };
 
 const wait = (timeout: number) => {
@@ -101,6 +101,7 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
         }
       >
         <Text style={styles.title}>main page</Text>
+        <MapView />
         <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text>
         <View style={styles.states}>{jsxStates(data.states)}</View>
         <Button
