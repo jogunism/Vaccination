@@ -9,13 +9,13 @@ import { RootState } from '../redux/reducers';
 import { MapView } from '../component/mapbox';
 
 import { VaccinationData } from '../redux/types';
-import { TopNavigatorParamsList, NavigatorParamsList } from '../navigation/types';
+import { DrawerNavigatorParamsList, RootStackParamsList } from '../navigation/types';
 
 
 export interface MainProps {
   navigation: CompositeNavigationProp<
-    StackNavigationProp<TopNavigatorParamsList, 'Vaccination'>,
-    StackNavigationProp<NavigatorParamsList>
+    StackNavigationProp<DrawerNavigatorParamsList, 'Vaccination'>,
+    StackNavigationProp<RootStackParamsList>
     >
 };
 
@@ -36,11 +36,11 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
     navigation.navigate('Sub');
   };
 
-  const pressModal = () => {
-    navigation.navigate('Modal', {
-      screen: 'Modal'
-    });
-  };
+  // const pressModal = () => {
+  //   navigation.navigate('Modal', {
+  //     // screen: 'Modal'
+  //   });
+  // };
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -108,7 +108,7 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
       </View>
       <View style={styles.states}>
         <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text>
-        {jsxStates(data.states)}
+        {/* {jsxStates(data.states)} */}
       </View>
       <Button
         color={styles.button.color}
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
   },
   states: {
-    borderWidth: 1,
+    // borderWidth: 1,
     // paddingTop: -10,
     paddingLeft: 40,
   },

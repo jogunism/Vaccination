@@ -4,12 +4,14 @@ export type ModalNavigatorParamsList = {
   Modal: undefined
 };
 
-export type TopNavigatorParamsList = {
-  Vaccination: undefined;
-  Sub: undefined;
+export type DrawerNavigatorParamsList = {
+  Vaccination: undefined,
+  Sub: undefined,
 };
 
-export type NavigatorParamsList = {
-  Root: NavigatorScreenParams<TopNavigatorParamsList>;
-  Modal: NavigatorScreenParams<ModalNavigatorParamsList>;
+export type RootStackParamsList = {
+  // Main: undefined,
+  // Modal: undefined,
+  Main: NavigatorScreenParams<DrawerNavigatorParamsList>,
+  Modal: NavigatorScreenParams<ModalNavigatorParamsList>,
 }

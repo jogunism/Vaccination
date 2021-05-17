@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack'
 
-import { TopNavigatorParamsList } from '../navigation/types';
+import { DrawerNavigatorParamsList } from '../navigation/types';
 
 export interface SubProps {
-  navigation: StackNavigationProp<TopNavigatorParamsList, 'Sub'>;
+  navigation: StackNavigationProp<DrawerNavigatorParamsList, 'Sub'>;
 };
 
 export const Sub: React.FC<SubProps> = ({ navigation }) => {
