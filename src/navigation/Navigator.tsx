@@ -5,6 +5,9 @@ import { Main, Sub, Modal } from '../containers';
 
 const options: StackNavigationOptions = {
   // headerShown: false
+  headerStyle: {
+    backgroundColor: '#FFC600'
+  },
 };
 
 const TopNavigator: React.FC = () => {

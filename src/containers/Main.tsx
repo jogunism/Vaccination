@@ -73,9 +73,9 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
     if (!mounted.current) {
       // mounted
       // dispatch(testAction());
-      console.log('use effect!');
+      // console.log('use effect!');
       wait(3000).then(() => {
-        console.log('hide after 3sec.');
+        // console.log('hide after 3sec.');
         SplashScreen.hide();
       });
     }
@@ -92,54 +92,58 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scrollView}
-        contentOffset={{x: 0, y: 0}}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <Text style={styles.title}>main page</Text>
+    <ScrollView 
+      style={styles.container}
+      contentContainerStyle={styles.scrollView}
+      contentOffset={{x: 0, y: 0}}
+      refreshControl={
+        <RefreshControl
+          style={styles.refresh}
+          refreshing={refreshing}
+          onRefresh={onRefresh} />
+      }
+    >
+      <View style={styles.mapview}>
         <MapView />
+      </View>
+      <View style={styles.states}>
         <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text>
-        <View style={styles.states}>{jsxStates(data.states)}</View>
-        <Button
-          color={styles.button.color}
-          title="push"
-          onPress={pressPush}
-        />
-        <Button
-          color={styles.button.color}
-          title="modal"
-          onPress={() => {
-            navigation.navigate('Modal', {
-              screen: 'Modal', 
-            });
-          }}
-        />
-      </ScrollView>
-    </View>
+        {jsxStates(data.states)}
+      </View>
+      <Button
+        color={styles.button.color}
+        title="push"
+        onPress={pressPush}
+      />
+      <Button
+        color={styles.button.color}
+        title="modal"
+        onPress={() => {
+          navigation.navigate('Modal', {
+            screen: 'Modal', 
+          });
+        }}
+      />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
   },
   scrollView: {
     flex: 1,
-
     backgroundColor: 'white',
     // alignItems: 'center',
     // borderEndWidth: 1,
     justifyContent: 'flex-start'
   },
-  title: {
-    fontSize: 16,
-    fontWeight: '700',
-    textAlign: 'center',
+  refresh: {
+    backgroundColor: '#FFC600'
+  },
+  mapview: {
+    paddingTop: 20,
   },
   data: {
     fontSize: 12,
@@ -147,7 +151,8 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
   },
   states: {
-    paddingTop: 10,
+    borderWidth: 1,
+    // paddingTop: -10,
     paddingLeft: 40,
   },
   button: {
