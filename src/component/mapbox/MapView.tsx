@@ -1,35 +1,41 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import {StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
-import {MAPBOX_TOKEN , COORD_CENTER, MAPBOX_STYLE_URL, bundesLandCoords} from './type'
-import {MapMarker} from './MapMarker'
+import { MapMarker } from './MapMarker'
 import { RootState } from '../../redux/reducers';
 
-import { VaccinationData } from '../../redux/types';
+// import { VaccinationData } from '../../redux/types';
+import { MAPBOX_TOKEN , COORD_CENTER, MAPBOX_STYLE_URL, bundesLandCoords } from './type'
 
-interface Props {}
-export const MapView: React.FC<Props> = () => {
-  const { data } = useSelector((state: RootState) => state.main);
+interface MapViewProps {
+  handleSelectState: Function
+}
+
+export const MapView: React.FC<MapViewProps> = ({ handleSelectState }) => {
+
+  const { states } = useSelector((state: RootState) => state.main);
   const coords = new Map(bundesLandCoords.map(i => [i.key, i.value]));
  
-
   /* -----------------------------------------------
   * Methods
   */
-  const jsxMarkers = (o: { [key: string]: VaccinationData }) => {
-    if (o === undefined) {
+  const jsxMarkers = () => {
+    if (!states || Object.entries(states).length === 0) {
       return;
     }
-    const datas = new Map(Object.entries(o).map(i => [i[0], i[1]]));
     return <View>
-            {bundesLandCoords.map((item, idx) =>(<MapMarker key={idx} id={item.key} name={datas.get(item.key)?.name??'none'} coordinate={item.value} />))}
+            { bundesLandCoords.map((item, idx) => 
+                <MapMarker 
+                  key={ idx }
+                  id={ item.key }
+                  name={ states[item.key]?.name ?? 'none' }
+                  coordinate={ item.value }
+                  handleSelectState={ handleSelectState }
+                />
+            ) }
           </View>
-  }
-
-  const markerTest = () => {
-    return <View><MapMarker key={'1'} id={'bw'} name={'bwdddd-ddddddddd'} coordinate={[9.0,  48.6]} /></View>
-  }
+  };
 
   /* -----------------------------------------------
   * Hooks
@@ -48,25 +54,23 @@ export const MapView: React.FC<Props> = () => {
       // showMarker.current = true;
       // console.log(showMarker.current)
     };
-  }, [data]);
-
- 
+  }, [states]);
 
   return (
-    <View style={styles.container}>
+    <View style={ styles.container }>
       <MapboxGL.MapView
-        style={styles.map}
-        styleURL={MAPBOX_STYLE_URL}
-        pitchEnabled={false}
-        scrollEnabled={false}
-        zoomEnabled={false}>
+        style={ styles.map }
+        styleURL={ MAPBOX_STYLE_URL }
+        pitchEnabled={ false }
+        scrollEnabled={ false }
+        zoomEnabled={ false }>
         <MapboxGL.Camera
-          animationMode={'flyTo'}  
-          animationDuration={500} 
-          zoomLevel={4.0} 
-          centerCoordinate={[COORD_CENTER.longitude, COORD_CENTER.latitude]} />
-        {/* {jsxMarkers(data.states)} */}
-        {markerTest()}
+          animationMode={ 'flyTo' }
+          animationDuration={ 500 } 
+          zoomLevel={ 4.0 } 
+          centerCoordinate={ COORD_CENTER } 
+        />
+        { jsxMarkers() }
       </MapboxGL.MapView>
     </View>
   );

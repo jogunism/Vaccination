@@ -1,5 +1,6 @@
 // main type
-export const VACCINATION = 'VACCINATION';
+export const VACCINATED_ALL = 'VACCINATED_ALL';
+export const VACCINATED_STATE = 'VACCINATED_STATE';
 
 export interface Vaccination {
   astraZeneca: number;
@@ -26,7 +27,7 @@ export interface VaccinationData {
 }
 
 interface ActVaccineStatement {
-  type: typeof VACCINATION;
+  type: typeof VACCINATED_ALL;
   payload: VaccinationData;
 }
 

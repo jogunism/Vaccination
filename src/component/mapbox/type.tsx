@@ -1,5 +1,3 @@
-import {Dimensions} from 'react-native';
-
 export const MAPBOX_TOKEN = 'pk.eyJ1IjoibWFscmlqaW1hIiwiYSI6ImNrbnN4ZDhtYzJuaGgyb254ZDZzZGtzb3AifQ.WH0qwTjCQjETGilt-3FO7A';
 export const MAPBOX_STYLE_URL = 'mapbox://styles/malrijima/cko17rtyp0lu517npldnvwmuz';
 
@@ -9,8 +7,8 @@ export interface MapMarkerData {
   coordinate: number[],
 }
 
-//COORD
-export const COORD_CENTER = {latitude: 51.2, longitude: 10.4}
+// COORD
+export const COORD_CENTER = [10.4, 51.2]; // longitude, latitude
 
 export const bundesLandCoords = [
   {key:'BB', value:[13.6, 52.0]},
@@ -29,9 +27,4 @@ export const bundesLandCoords = [
   {key:'SN', value:[13.4, 50.9]},
   {key:'ST', value:[11.6, 52.1]},
   {key:'TH', value:[11.0, 50.9]},
-]
-
- 
-
-
- 
+] 

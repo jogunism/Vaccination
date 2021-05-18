@@ -1,11 +1,15 @@
 import React from 'react';
 import {Dimensions, StyleSheet, View, Button, Text, TouchableOpacity} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
-import {MapMarkerData} from './type';
+import { MapMarkerData } from './type';
 
-export const MapMarker: React.FC<MapMarkerData> = (props) => {
+interface MapMarkerProps {
+  handleSelectState: Function
+}
+
+export const MapMarker: React.FC<MapMarkerData & MapMarkerProps> = (props) => {
   const onSelected = () => {
-    console.log(props.id)
+    props.handleSelectState(props.id);
   };
   
 //   return (

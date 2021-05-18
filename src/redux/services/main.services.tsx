@@ -6,7 +6,7 @@ const http = axios.create({
 
 export const mainService = {
   // async testMethod({ id }: { id: String }) {
-  async testMethod() {
+  async allVaccinatedData() {
     try {
       const response = await http.get('/vaccinations');
       return await Promise.resolve(response);

@@ -1,21 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import SplashScreen from 'react-native-splash-screen'
 import { RefreshControl, ScrollView, Button, StyleSheet, Text, View } from 'react-native';
+import SplashScreen from 'react-native-splash-screen'
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { testAction } from '../redux/actions';
+
+import { allVaccinatedData } from '../redux/actions';
 import { RootState } from '../redux/reducers';
 import { MapView } from '../component/mapbox';
-
 import { VaccinationData } from '../redux/types';
-import { DrawerNavigatorParamsList, RootStackParamsList } from '../navigation/types';
-
+import { RootStackParamsList,DrawerNavigatorParamsList } from '@/navigation/types';
 
 export interface MainProps {
   navigation: CompositeNavigationProp<
-    StackNavigationProp<DrawerNavigatorParamsList, 'Vaccination'>,
-    StackNavigationProp<RootStackParamsList>
+    StackNavigationProp<RootStackParamsList>,
+    StackNavigationProp<DrawerNavigatorParamsList, 'Vaccination'>
     >
 };
 
@@ -24,10 +23,9 @@ const wait = (timeout: number) => {
 }
 
 export const Main: React.FC<MainProps> = ({ navigation }) => {
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const dispatch = useDispatch();
   const { data } = useSelector((state: RootState) => state.main);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const dispatch = useDispatch();
 
   /* -----------------------------------------------
    * Methods
@@ -36,34 +34,37 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
     navigation.navigate('Sub');
   };
 
-  // const pressModal = () => {
-  //   navigation.navigate('Modal', {
-  //     // screen: 'Modal'
-  //   });
-  // };
-
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => {
-      dispatch(testAction());
+      dispatch(allVaccinatedData());
       setRefreshing(false);
     });
   }, []);
 
-  const jsxStates = (o: { [key: string]: VaccinationData }) => {
-    if (o === undefined) {
-      return;
-    }
-    const item = [];
-    for (const [k, v] of Object.entries(o)) {
-      item.push(
-        <Text key={k}>
-          {k} : {v.vaccinated}
-        </Text>,
-      );
-    }
-    return item;
-  };
+  // const jsxStates = (o: { [key: string]: VaccinationData }) => {
+  //   if (o === undefined) {
+  //     return;
+  //   }
+  //   const item = [];
+  //   for (const [k, v] of Object.entries(o)) {
+  //     item.push(
+  //       <Text key={k}>
+  //         {k} : {v.vaccinated}
+  //       </Text>,
+  //     );
+  //   }
+  //   return item;
+  // };
+
+  const handleSelectState = (stateId: string) => {
+    navigation.navigate('Modal', {
+      screen: 'Detail',
+      params: {
+        stateId
+      }
+    });
+  }
 
   /* -----------------------------------------------
    * Hooks
@@ -73,9 +74,9 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
     if (!mounted.current) {
       // mounted
       // dispatch(testAction());
-      // console.log('use effect!');
-      wait(3000).then(() => {
-        // console.log('hide after 3sec.');
+
+      // hide splash screen after 1.5sec.
+      wait(1500).then(() => {
         SplashScreen.hide();
       });
     }
@@ -104,26 +105,17 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
       }
     >
       <View style={styles.mapview}>
-        <MapView />
+        <MapView handleSelectState={handleSelectState}/>
       </View>
       <View style={styles.states}>
         <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text>
         {/* {jsxStates(data.states)} */}
+        <Button
+          color={styles.button.color}
+          title="push"
+          onPress={pressPush}
+        />
       </View>
-      <Button
-        color={styles.button.color}
-        title="push"
-        onPress={pressPush}
-      />
-      <Button
-        color={styles.button.color}
-        title="modal"
-        onPress={() => {
-          navigation.navigate('Modal', {
-            screen: 'Modal', 
-          });
-        }}
-      />
     </ScrollView>
   );
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack'
-
 import { DrawerNavigatorParamsList } from '../navigation/types';
 
 export interface SubProps {
