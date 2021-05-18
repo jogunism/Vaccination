@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import {StyleSheet, View, Text} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
-import {MAPBOX_TOKEN , COORD_CENTER, MAPBOX_STYLE_URL, MAPBOX_WIDTH, MAPBOX_HEIGHT, bundesLandCoords} from './type'
+import {MAPBOX_TOKEN , COORD_CENTER, MAPBOX_STYLE_URL, bundesLandCoords} from './type'
 import {MapMarker} from './MapMarker'
 import { RootState } from '../../redux/reducers';
 
@@ -27,11 +27,14 @@ export const MapView: React.FC<Props> = () => {
           </View>
   }
 
+  const markerTest = () => {
+    return <View><MapMarker key={'1'} id={'bw'} name={'bwdddd-ddddddddd'} coordinate={[9.0,  48.6]} /></View>
+  }
+
   /* -----------------------------------------------
   * Hooks
   */
   const mounted = useRef(false);
-  const showMarker = useRef(false);
   useEffect(() => {
     if (!mounted.current) {
       // mounted
@@ -47,8 +50,10 @@ export const MapView: React.FC<Props> = () => {
     };
   }, [data]);
 
+ 
+
   return (
-    <View style={styles.root}>
+    <View style={styles.container}>
       <MapboxGL.MapView
         style={styles.map}
         styleURL={MAPBOX_STYLE_URL}
@@ -58,18 +63,18 @@ export const MapView: React.FC<Props> = () => {
         <MapboxGL.Camera
           animationMode={'flyTo'}  
           animationDuration={500} 
-          zoomLevel={4.5} 
+          zoomLevel={4.0} 
           centerCoordinate={[COORD_CENTER.longitude, COORD_CENTER.latitude]} />
-        {jsxMarkers(data.states)}
+        {/* {jsxMarkers(data.states)} */}
+        {markerTest()}
       </MapboxGL.MapView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  root: {
-    width: MAPBOX_WIDTH,
-    height: MAPBOX_HEIGHT,
+  container: {
+    flex: 1
   },
   map: {
     flex: 1,

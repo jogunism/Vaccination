@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC600'
   },
   mapview: {
+    flex: 1,
     paddingTop: 20,
   },
   data: {
@@ -154,8 +155,10 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // paddingTop: -10,
     paddingLeft: 40,
+    flex: 1
   },
   button: {
     color: '#ff0000',
   },
+ 
 });

@@ -2,8 +2,6 @@ import {Dimensions} from 'react-native';
 
 export const MAPBOX_TOKEN = 'pk.eyJ1IjoibWFscmlqaW1hIiwiYSI6ImNrbnN4ZDhtYzJuaGgyb254ZDZzZGtzb3AifQ.WH0qwTjCQjETGilt-3FO7A';
 export const MAPBOX_STYLE_URL = 'mapbox://styles/malrijima/cko17rtyp0lu517npldnvwmuz';
-export const MAPBOX_WIDTH = Dimensions.get('window').width;
-export const MAPBOX_HEIGHT = Dimensions.get('window').height / 2;
 
 export interface MapMarkerData {
   id: string
@@ -12,7 +10,7 @@ export interface MapMarkerData {
 }
 
 //COORD
-export const COORD_CENTER = {latitude: 51.1, longitude: 10.4}
+export const COORD_CENTER = {latitude: 51.2, longitude: 10.4}
 
 export const bundesLandCoords = [
   {key:'BB', value:[13.6, 52.0]},
