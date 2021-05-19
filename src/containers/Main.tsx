@@ -8,7 +8,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { allVaccinatedData } from '../redux/actions';
 import { RootState } from '../redux/reducers';
 import { MapView } from '../component/mapbox';
-import { VaccinationData } from '../redux/types';
 import { RootStackParamsList,DrawerNavigatorParamsList } from '@/navigation/types';
 
 export interface MainProps {
@@ -73,10 +72,10 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
   useEffect(() => {
     if (!mounted.current) {
       // mounted
-      // dispatch(testAction());
 
       // hide splash screen after 1.5sec.
       wait(1500).then(() => {
+        dispatch(allVaccinatedData());
         SplashScreen.hide();
       });
     }
@@ -110,11 +109,11 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
       <View style={styles.states}>
         <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text>
         {/* {jsxStates(data.states)} */}
-        <Button
+        {/* <Button
           color={styles.button.color}
           title="push"
           onPress={pressPush}
-        />
+        /> */}
       </View>
     </ScrollView>
   );
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC600'
   },
   mapview: {
-    flex: 1,
+    flex: 1.3,
     paddingTop: 20,
   },
   data: {

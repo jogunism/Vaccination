@@ -1,18 +1,20 @@
 import { 
   MainActionType,
-  VaccinationData,
   VACCINATED_ALL,
-  VACCINATED_STATE
+  VACCINATED_STATE,
+  VaccinationData,
 } from '../types';
 
 interface MainState {
   data: VaccinationData;
-  states: { [key: string]: VaccinationData }
+  states: { [key: string]: VaccinationData };
+  currState: VaccinationData;
 }
 
 const initialState: MainState = {
   data: {} as VaccinationData,
-  states: {} as { [key: string]: VaccinationData }
+  states: {} as { [key: string]: VaccinationData },
+  currState: {} as VaccinationData,
 };
 
 export function mainReducer(
@@ -29,12 +31,11 @@ export function mainReducer(
         states: action.payload.states
       };
     };
-    // case VACCINATED_STATE: {
-    //   return {
-    //     ...state,
-    //     data: action.payload,
-    //   };
-    // }
+    case VACCINATED_STATE:
+      return {
+        ...state,
+        currState: state.states[action.stateId]
+      };
     default:
       return state;
   }
