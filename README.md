@@ -23,7 +23,7 @@ $ cd ios
 $ pod install
 
 $ cd ..
-# build
+# running
 $ yarn react-native run-ios
 $ yarn react-native run-android
 ```
