@@ -18,7 +18,7 @@ $ cd {PROJECT_FOLDER}
 $ yarn
 $ yarn upgrade #if you needed
 
-# for ios running
+# prepare for ios running
 $ cd ios
 $ pod install
 
