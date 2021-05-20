@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RefreshControl, ScrollView, Button, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen'
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -8,6 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { allVaccinatedData } from '../redux/actions';
 import { RootState } from '../redux/reducers';
 import { MapView } from '../component/mapbox';
+import { MainChart } from './MainXAxisChart';
 import { RootStackParamsList,DrawerNavigatorParamsList } from '@/navigation/types';
 
 export interface MainProps {
@@ -106,15 +107,18 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
       <View style={styles.mapview}>
         <MapView handleSelectState={handleSelectState}/>
       </View>
-      <View style={styles.states}>
-        <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text>
+      <View style={styles.chart}>
+        <MainChart />
+      </View>
+      {/* <View style={styles.states}>
+        <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text> */}
         {/* {jsxStates(data.states)} */}
         {/* <Button
           color={styles.button.color}
           title="push"
           onPress={pressPush}
         /> */}
-      </View>
+      {/* </View> */}
     </ScrollView>
   );
 };
@@ -122,6 +126,7 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // paddingBottom: 50,
   },
   scrollView: {
     flex: 1,
@@ -136,6 +141,12 @@ const styles = StyleSheet.create({
   mapview: {
     flex: 1.3,
     paddingTop: 20,
+  },
+  chart: {
+    // flex: 1,
+    // borderWidth: 1,
+    // paddingTop: 20,
+    paddingBottom: 20
   },
   data: {
     fontSize: 12,
