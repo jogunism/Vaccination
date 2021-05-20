@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFC600'
   },
   mapview: {
-    flex: 1.3,
+    flex: 1,
     paddingTop: 20,
   },
   chart: {

@@ -1,21 +1,15 @@
+export const MAPBOX_TOKEN = 'pk.eyJ1IjoibWFscmlqaW1hIiwiYSI6ImNrbnN4ZDhtYzJuaGgyb254ZDZzZGtzb3AifQ.WH0qwTjCQjETGilt-3FO7A';
+export const MAPBOX_STYLE_URL = 'mapbox://styles/malrijima/cko17rtyp0lu517npldnvwmuz';
+
 export interface MapMarkerData {
   id: string
   name : string,
   coordinate: number[],
 }
 
-export const mapboxInfo = {
-  token: 'pk.eyJ1IjoibWFscmlqaW1hIiwiYSI6ImNrbnN4ZDhtYzJuaGgyb254ZDZzZGtzb3AifQ.WH0qwTjCQjETGilt-3FO7A',
-  sytelURL: 'mapbox://styles/malrijima/cko17rtyp0lu517npldnvwmuz',
-  pitchEnabled: false,
-  scrollEnabled: false,
-  zoomEnabled: false,
-  camera : {
-    animationDuration: 300,
-    zoomLevel: 4.5,
-    centerCoordinate: [10.4, 51.3]
-  }
-}
+// COORD
+export const COORD_CENTER = [10.4, 51.2]; // longitude, latitude
+
 export const bundesLandCoords = [
   {key:'BB', value:[13.6, 52.0]},
   {key:'BE', value:[13.4, 52.7]},
