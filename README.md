@@ -18,13 +18,12 @@ $ cd {PROJECT_FOLDER}
 $ yarn
 $ yarn upgrade #if you needed
 
-# prepare for ios running
+# for ios running
 $ cd ios
 $ pod install
 
 $ cd ..
-
-# run with simulator
+# build
 $ yarn react-native run-ios
 $ yarn react-native run-android
 ```
