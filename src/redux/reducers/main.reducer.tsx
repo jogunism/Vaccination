@@ -8,12 +8,16 @@ import {
 interface MainState {
   data: VaccinationData;
   states: { [key: string]: VaccinationData };
+  barChartTitles: Array<String>;
+  barChartData: Array<{ x: string, y: number, z: number }>;
   currState: VaccinationData;
 }
 
 const initialState: MainState = {
   data: {} as VaccinationData,
   states: {} as { [key: string]: VaccinationData },
+  barChartTitles: [] as Array<String>,
+  barChartData: [] as Array<{ x: string, y: number, z: number }>,
   currState: {} as VaccinationData,
 };
 
@@ -24,11 +28,27 @@ export function mainReducer(
 
   switch (action.type) {
     case VACCINATED_ALL: {
+      let _data = (() => {
+        let _arr: Array<{ x: string, y: number, z: number }> = [];
+          for (const [k, v] of Object.entries(action.payload.states)) {
+            if (k === 'Bund') {
+              continue;
+            }
+            _arr.push({
+              x: v.name,
+              y: parseFloat((v.quote * 100).toFixed(2)),
+              z: parseFloat((v.secondVaccination.quote * 100).toFixed(2)),
+            });
+          }
+        return _arr.sort((a, b) => a.y - b.y);
+      })();
+
       return {
         ...state,
         data: action.payload,
-        // states: new Map(Object.entries(action.payload.states).map(i => [i[0], i[1]]))
-        states: action.payload.states
+        states: action.payload.states,
+        barChartTitles: _data.map((o) => o.x),
+        barChartData: _data
       };
     };
     case VACCINATED_STATE:

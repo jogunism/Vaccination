@@ -23,7 +23,7 @@ const wait = (timeout: number) => {
 }
 
 export const Main: React.FC<MainProps> = ({ navigation }) => {
-  const { data } = useSelector((state: RootState) => state.main);
+  const { data, states } = useSelector((state: RootState) => state.main);
   const [refreshing, setRefreshing] = React.useState(false);
   const dispatch = useDispatch();
 
@@ -94,59 +94,50 @@ export const Main: React.FC<MainProps> = ({ navigation }) => {
 
   return (
     <ScrollView 
-      style={styles.container}
+      style={ styles.container }
       contentContainerStyle={styles.scrollView}
       contentOffset={{x: 0, y: 0}}
       refreshControl={
         <RefreshControl
-          style={styles.refresh}
-          refreshing={refreshing}
-          onRefresh={onRefresh} />
+          style={ styles.refresh }
+          tintColor={ '#000000' }
+          refreshing={ refreshing }
+          onRefresh={ onRefresh } />
       }
     >
-      <View style={styles.mapview}>
-        <MapView handleSelectState={handleSelectState}/>
-      </View>
-      <View style={styles.chart}>
+      <View style={ styles.main }>
+        <View style={styles.mapview}>
+          <MapView handleSelectState={handleSelectState}/>
+        </View>
         <MainChart />
+        <View style={ styles.footer }>
+          <Text style={ styles.copyright }>©RANGE 2021</Text>
+          <Text style={ styles.license }>Licensed by Robert Koch-Institut</Text>
+        </View>
       </View>
-      {/* <View style={styles.states}>
-        <Text style={styles.data}>Total Vaccinated : {data.vaccinated}</Text> */}
-        {/* {jsxStates(data.states)} */}
-        {/* <Button
-          color={styles.button.color}
-          title="push"
-          onPress={pressPush}
-        /> */}
-      {/* </View> */}
+
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    // paddingBottom: 50,
-  },
-  scrollView: {
-    flex: 1,
-    backgroundColor: 'white',
-    // alignItems: 'center',
-    // borderEndWidth: 1,
-    justifyContent: 'flex-start'
+    backgroundColor: '#FFE380',
   },
   refresh: {
-    backgroundColor: '#FFC600'
+    backgroundColor: '#FFE380',
+    borderColor: '#999'
+  },
+  scrollView: {
+    backgroundColor: 'white',
+    justifyContent: 'flex-start'
+  },
+  main: {
+    flex: 1
   },
   mapview: {
-    flex: 1,
-    paddingTop: 20,
-  },
-  chart: {
-    // flex: 1,
-    // borderWidth: 1,
-    // paddingTop: 20,
-    paddingBottom: 20
+    height: 470,
+    paddingBottom: 20,
   },
   data: {
     fontSize: 12,
@@ -154,13 +145,27 @@ const styles = StyleSheet.create({
     paddingLeft: 40,
   },
   states: {
-    // borderWidth: 1,
-    // paddingTop: -10,
+    flex: 1,
     paddingLeft: 40,
-    flex: 1
   },
   button: {
     color: '#ff0000',
   },
+  footer: {
+    paddingTop: 10,
+    backgroundColor: '#FFE380',
+    paddingBottom: 35,
+  },
+  copyright: {
+    paddingTop: 10,
+    paddingBottom: 5,
+    textAlign: 'center',
+    fontSize: 11,
+    fontWeight: '700'
+  },
+  license: {
+    textAlign: 'center',
+    fontSize: 11,
+  }
  
 });

@@ -1,5 +1,8 @@
-import React from 'react';
+import { RootState } from '@/redux/reducers';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import { View } from 'react-native'
+import { useSelector } from 'react-redux';
 import {
   VictoryChart,
   VictoryStack,
@@ -13,69 +16,90 @@ interface MainChartProps {
 
 export const MainChart: React.FC<MainChartProps> = () => {
 
-  const dataA = [
-    { x: "Personal Drones", y: 32 },
-    { x: "Smart Thermostat", y: 40 },
-    { x: "Television", y: 38 },
-    { x: "Smartwatch", y: 37 },
-    { x: "Fitness Monitor", y: 25 },
-    { x: "Tablet", y: 19 },
-    { x: "Camera", y: 15 },
-    { x: "Laptop", y: 13 },
-    { x: "Phone", y: 12 }
-  ];
-  
-  const dataB = dataA.map((point) => {
-    const y = Math.round(point.y + 3 * (Math.random() - 0.5));
-    return { ...point, y };
-  });
-  
-  const width = 400;
-  const height = 300;
+  const { barChartTitles, barChartData } = useSelector((state: RootState) => state.main);
+  const width = 370;
+  const height = 500;
 
-  return (
-      <VictoryChart horizontal
-        height={height}
-        // width={width}
-        padding={40}
-      >
-        <VictoryStack
-          style={{ data: { width: 22 }, labels: { fontSize: 12 } }}
+  /* -----------------------------------------------
+   * Methods
+   */
+  // const dataB = dataA.map((point) => {
+  //   const y = Math.round(point.y + 3 * (Math.random() - 0.5));
+  //   return { ...point, y };
+  // });
+
+  /* -----------------------------------------------
+   * Hooks
+   */
+  // useEffect(() => {
+  //   console.log(barChartData);
+  //   console.log(barChartTitles);
+  // }, [barChartData])
+
+
+  /* -----------------------------------------------
+   * Render
+   */
+  const chart = () => {
+    if (!barChartData || Object.keys(barChartData).length < 1) {
+      return (
+        <View style={ styles.loading }>
+          <ActivityIndicator size='large' />
+        </View>
+      );
+    }
+
+    return (
+        <VictoryChart
+          horizontal
+          height={ height }
+          width={ width }
+          padding={{ top: 10, right: 60, bottom: 100, left: 30 }}
         >
-          <VictoryBar
-            style={{ data: { fill: "orange" } }}
-            data={ dataA }
-            y={(data) => (-Math.abs(data.y))}
-            labels={({ datum }) => (`${Math.abs(datum.y)}%`)}
-          />
-          <VictoryBar
-            style={{ data: { fill: "#FFC600" } }}
-            data={ dataB }
-            labels={({ datum }) => (`${Math.abs(datum.y)}%`)}
-          />
-        </VictoryStack>
-
-        <VictoryAxis
-          style={{
-            axis: { stroke: "transparent" },
-            ticks: { stroke: "transparent" },
-            tickLabels: { fontSize: 12, fill: "black" }
-          }}
-          /*
-            Use a custom tickLabelComponent with
-            an absolutely positioned x value to position
-            your tick labels in the center of the chart. The correct
-            y values are still provided by VictoryAxis for each tick
-          */
-          tickLabelComponent={
-            <VictoryLabel
-              x={width / 2}
-              textAnchor="middle"
+          <VictoryStack
+            style={{ data: { width: 20 }, labels: { fontSize: 11 } }}
+          >
+            <VictoryBar
+              style={{ data: { fill: "#FFC600" } }}
+              data={ barChartData }
+              y={ (data) => (100 - data.z) }
+              labels={ ({ datum }) => ( datum.z === 0 ? '' : `${ datum.z }%` ) }
             />
-          }
-          tickValues={dataA.map((point) => point.x).reverse()}
-        />
-      </VictoryChart>
+            <VictoryBar
+              style={{ data: { fill: "orange" } }}
+              data={ barChartData }
+              y={ (data) => data.y }
+              labels={ ({ datum }) => ( `${ datum.y }%` ) }
+            />
+          </VictoryStack>
 
-  );
+          <VictoryAxis
+            style={{
+              axis: { stroke: 'transparent' },
+              ticks: { stroke: 'transparent' },
+              tickLabels: { 
+                fontSize: 13,
+                fill: '#000000'
+              }
+            }}
+            tickLabelComponent={
+              <VictoryLabel
+                x={ 40 }
+                textAnchor='start'
+              />
+            }
+            tickValues={ barChartData.map((point) => point.y) }
+          />
+        </VictoryChart>
+    );
+  };
+
+  return chart();
 };
+
+const styles = StyleSheet.create({
+  loading: {
+    padding: 50,
+    height: 200
+  }
+});
